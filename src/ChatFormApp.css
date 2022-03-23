@@ -3,6 +3,10 @@
     font-family:'Work Sans', sans-serif ;
 }
 
+::placeholder {
+    color: #000;
+}
+
 p {
     margin: 0;
     padding: 0;
@@ -13,3 +17,4 @@ p {
     margin: auto;
     background-color: #fafafa
 }
+
