@@ -7,38 +7,37 @@ import { useForm } from '../../hooks/useForm';
 import User from '../../images/user.jpg';
 
 //Styles
-import './Name.css';
+import './Birth.css';
 
 
 
-const Name = () => {
+const Birth = () => {
 
 
     const [formError, setFormError] = useState(false);
     const [formErrorMsg, setFormErrorMsg] = useState('');
 
     const [ formValues, handleInputChange] = useForm({
-        firstName: '',
-        secondName:'',
-        lastNameFirst: '',
-        lastNameSecond:''
-
+        day: '',
+        month:'',
+        year: ''
+        
     })
-    const { firstName, secondName, lastNameFirst, lastNameSecond } = formValues;
+    const { day, month, year } = formValues;
 
 
 
     const isValidate = () => {
 
-        if( firstName.trim().length === 0){
+        if( day.trim().length === 0){
             setFormError(true);
-            setFormErrorMsg(' El nombre es requerido');
-        } else if(lastNameFirst.trim().length === 0 ){
+            setFormErrorMsg(' El día es requerido ');
+        } else if(month.trim().length === 0 ){
             setFormError(true);
-            setFormErrorMsg(' El primer apellido es requerido');
-        } else if(lastNameSecond.trim().length === 0 ){
+            setFormErrorMsg(' El mes es requerido  ');
+        } else if(year.trim().length === 0 ){
             setFormError(true);
-            setFormErrorMsg(' El segundo apellido es requerido');
+            setFormErrorMsg(' El año es requerido ');
         } else {
             setFormError(false);
         }
@@ -50,7 +49,7 @@ const Name = () => {
 
         isValidate();
 
-    },[firstName,secondName,lastNameFirst,lastNameSecond])
+    },[day,month,year])
    
 
 
@@ -68,30 +67,25 @@ const Name = () => {
             <Col xs={8} md={9} className='form-container'>
 
                 <form>
-                    <h3> ¿Cuál es tu nombre? </h3>
+                    <h3> ¿Cuál es tu fecha de nacimiento? </h3>
                     <input type='text'
-                           name='firstName' 
-                           placeholder='Nombre'  
-                           value={firstName} 
+                           name='day' 
+                           placeholder='Día'  
+                           value={day} 
                            onChange={handleInputChange}/>
 
                     <input type='text' 
-                           name='secondName' 
-                           placeholder='Segundo Nombre' 
-                           value={secondName} 
+                           name='month' 
+                           placeholder='Mes' 
+                           value={month} 
                            onChange={handleInputChange} />
 
                     <input type='text' 
-                           name='lastNameFirst' 
-                           placeholder='Apellido Paterno' 
-                           value={lastNameFirst} 
+                           name='year' 
+                           placeholder='Año' 
+                           value={year} 
                            onChange={handleInputChange} />
 
-                    <input type='text' 
-                           name='lastNameSecond' 
-                           placeholder='Apellido Materno' 
-                           value={lastNameSecond} 
-                           onChange={handleInputChange} />
                 </form>
 
             </Col>
@@ -105,7 +99,7 @@ const Name = () => {
                 {
                     formError
                         ? <p> {formErrorMsg} </p>
-                        : <p>{`${firstName} ${secondName} ${lastNameFirst} ${lastNameSecond}`}</p>
+                        : <p>{`${day} ${month} ${year} `}</p>
                 }
                 
             </Col>
@@ -120,4 +114,4 @@ const Name = () => {
 
 
 
-export default Name;
+export default Birth;
