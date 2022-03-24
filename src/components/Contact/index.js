@@ -3,23 +3,25 @@ import {Container, Row, Col, Image} from 'react-bootstrap';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch } from 'react-redux';
 import { types } from '../../types/types';
+import validator from 'validator';
+import validateOnlyNum from '../../helpers/validateOnlyNum';
+
 
 
 //Image
 import User from '../../images/user.jpg';
 
 
-
-
-
 const Contact = ({checkContact, enableDispatch}) => {
 
+    
 
     const dispatch = useDispatch();
 
     const [formError, setFormError] = useState(false);
     const [formErrorMsg, setFormErrorMsg] = useState('');
 
+    //Custom hook
     const [ formValues, handleInputChange] = useForm({
         email: '',
         phone:'',
@@ -38,7 +40,16 @@ const Contact = ({checkContact, enableDispatch}) => {
         } else if(phone.trim().length === 0 ){
             setFormError(true);
             setFormErrorMsg(' el télefono es requerido ');
-        }  else {
+            
+        }  else if((validateOnlyNum(phone) === false && phone !== '') || (phone.length < 10 && phone !== '' ))  {
+            setFormError(true);
+            setFormErrorMsg(' Número de télefono invalido ');
+            
+        } else if( !validator.isEmail(email) ) {
+            setFormError(true);
+            setFormErrorMsg(' Email invalido ');
+            
+        } else {
             setFormError(false);
         }
 
@@ -90,7 +101,7 @@ const Contact = ({checkContact, enableDispatch}) => {
 
                 <form>
                     <h3> ¿Cuál es tu fecha de nacimiento? </h3>
-                    <input type='text'
+                    <input type='email'
                            name='email' 
                            placeholder='Correo'  
                            value={email} 
@@ -124,7 +135,6 @@ const Contact = ({checkContact, enableDispatch}) => {
             </Col>
 
              
-
         </Row>
 
 

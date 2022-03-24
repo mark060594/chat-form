@@ -14,6 +14,7 @@ import './ChatFormApp.css';
 
 const ChatFormApp = () => {
 
+  // get user data from redux
   const {data} = useSelector(state => state);
 
  
@@ -21,10 +22,10 @@ const ChatFormApp = () => {
   const [birthError, setBirthError] = useState(true);
   const [contactError, setContactError] = useState(true);
   const [enableDispatch, setEnableDispatch] = useState(false);
-  const [formError, setFormError] = useState(false);
+  const [formError, setFormError] = useState(true);
   
 
-
+console.log(contactError)
 
   const checkName = (state) => setNameError(state);
   const checkBirth = (state) => setBirthError(state);
@@ -32,7 +33,7 @@ const ChatFormApp = () => {
  
 
     
-  
+  //Handle to send data to redux store
   const handleSend = () => {
 
     if(!nameError && !birthError && !contactError){
@@ -46,11 +47,8 @@ const ChatFormApp = () => {
   }
 
 
-
-
   return (
 
-   
       <>
 
           <Header/>
@@ -73,16 +71,16 @@ const ChatFormApp = () => {
             <Col xs={10} className='data'>
 
               {
-                formError
-                    ? <p> Completa todos los campos </p>
-                    : <>
+                !formError
+                    ? <>
 
-                          <p>{`Fecha de Nacimiento: ${data.day} ${data.month} ${data.year}`}</p>
-                          <p>{`Correo Electrónico: ${data.email}`}</p>
-                          <p>{`Teléfono celular: ${data.phone}`}</p>
-                          <p>{`Nombre: ${data.firstName} ${data.secondName} ${data.lastNameFirst} ${data.lastNameSecond}`}</p>
-                    
-                      </>
+                      <p>{`Fecha de Nacimiento: ${data.day} ${data.month} ${data.year}`}</p>
+                      <p>{`Correo Electrónico: ${data.email}`}</p>
+                      <p>{`Teléfono celular: ${data.phone}`}</p>
+                      <p>{`Nombre: ${data.firstName} ${data.secondName} ${data.lastNameFirst} ${data.lastNameSecond}`}</p>
+              
+                    </>
+                    : <p> Completa todos los campos</p>
               }
                   
             </Col>

@@ -16,6 +16,7 @@ import './Name.css';
 
 const Name = ({checkName, enableDispatch}) => {
 
+    /* console.log(enableDispatch,'enableDipatch'); */
    
     const dispatch = useDispatch();
 
@@ -64,7 +65,6 @@ const Name = ({checkName, enableDispatch}) => {
         type: types.dataUser,
         payload:dataUser
     })
-
 
 
 
