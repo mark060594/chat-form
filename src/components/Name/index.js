@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Image} from 'react-bootstrap';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import { types } from '../../types/types';
+
 
 
 //Image
@@ -11,12 +14,15 @@ import './Name.css';
 
 
 
-const Name = () => {
+const Name = ({checkName, enableDispatch}) => {
 
+   
+    const dispatch = useDispatch();
 
     const [formError, setFormError] = useState(false);
     const [formErrorMsg, setFormErrorMsg] = useState('');
 
+    //Custom Hook
     const [ formValues, handleInputChange] = useForm({
         firstName: '',
         secondName:'',
@@ -27,7 +33,7 @@ const Name = () => {
     const { firstName, secondName, lastNameFirst, lastNameSecond } = formValues;
 
 
-
+    //Validate Form
     const isValidate = () => {
 
         if( firstName.trim().length === 0){
@@ -44,75 +50,106 @@ const Name = () => {
         }
 
     }
+
+    // Object to send in the action
+    const dataUser = {
+        firstName: firstName,
+        secondName: secondName,
+        lastNameFirst: lastNameFirst,
+        lastNameSecond: lastNameSecond
+    }
     
+    //Redux Action
+    const setDataUser = (dataUser) => ({
+        type: types.dataUser,
+        payload:dataUser
+    })
+
+
+
+
+    //useEffect to do Dispatch
+    useEffect(() => {
+
+        dispatch(setDataUser(dataUser));
+
+    },[enableDispatch]);
+
+    
+
 
     useEffect(() => {
 
         isValidate();
+        checkName(formError);
 
-    },[firstName,secondName,lastNameFirst,lastNameSecond])
+    },[firstName,secondName,lastNameFirst,lastNameSecond]);
    
 
 
 
   return (
 
-    <Container fluid className='main-name-container'>
+   
 
-        <Row className='name-container justify-content-center'>
+        <Container fluid className='main-name-container'>
 
-            <Col xs={4} md={3} className='user-img-container'>
-                <Image fluid  src={User} className='user-img' />
-            </Col>
+            <Row className='name-container justify-content-center'>
 
-            <Col xs={8} md={9} className='form-container'>
+                <Col xs={4} md={3} className='user-img-container'>
+                    <Image fluid  src={User} className='user-img' />
+                </Col>
 
-                <form>
-                    <h3> ¿Cuál es tu nombre? </h3>
-                    <input type='text'
-                           name='firstName' 
-                           placeholder='Nombre'  
-                           value={firstName} 
-                           onChange={handleInputChange}/>
+                <Col xs={8} md={9} className='form-container'>
 
-                    <input type='text' 
-                           name='secondName' 
-                           placeholder='Segundo Nombre' 
-                           value={secondName} 
-                           onChange={handleInputChange} />
+                    <form>
+                        <h3> ¿Cuál es tu nombre? </h3>
+                        <input type='text'
+                            name='firstName' 
+                            placeholder='Nombre'  
+                            value={firstName} 
+                            onChange={handleInputChange}/>
 
-                    <input type='text' 
-                           name='lastNameFirst' 
-                           placeholder='Apellido Paterno' 
-                           value={lastNameFirst} 
-                           onChange={handleInputChange} />
+                        <input type='text' 
+                            name='secondName' 
+                            placeholder='Segundo Nombre' 
+                            value={secondName} 
+                            onChange={handleInputChange} />
 
-                    <input type='text' 
-                           name='lastNameSecond' 
-                           placeholder='Apellido Materno' 
-                           value={lastNameSecond} 
-                           onChange={handleInputChange} />
-                </form>
+                        <input type='text' 
+                            name='lastNameFirst' 
+                            placeholder='Apellido Paterno' 
+                            value={lastNameFirst} 
+                            onChange={handleInputChange} />
 
-            </Col>
+                        <input type='text' 
+                            name='lastNameSecond' 
+                            placeholder='Apellido Materno' 
+                            value={lastNameSecond} 
+                            onChange={handleInputChange} />
+                    </form>
 
-        </Row>
+                </Col>
 
-        <Row className='name-screen-container justify-content-end'>
+            </Row>
 
-            <Col className='name-screen' xs={10}>
+            <Row className='name-screen-container justify-content-end'>
 
-                {
-                    formError
-                        ? <p> {formErrorMsg} </p>
-                        : <p>{`${firstName} ${secondName} ${lastNameFirst} ${lastNameSecond}`}</p>
-                }
-                
-            </Col>
+                <Col className='name-screen' xs={10}>
 
-        </Row>
+                    {
+                        formError
+                            ? <p> {formErrorMsg} </p>
+                            : <p>{`${firstName} ${secondName} ${lastNameFirst} ${lastNameSecond}`}</p>
+                    }
+                    
+                </Col>
 
-    </Container>
+            </Row>
+
+        </Container>
+
+ 
 
 
   )

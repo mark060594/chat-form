@@ -12,9 +12,47 @@ p {
     padding: 0;
 }
 
-.main-container {
+.data-send-container {
     max-width: 800px;
     margin: auto;
-    background-color: #fafafa
 }
 
+.data-send-container .msg-container {
+
+    background-color: #F0F0F0;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 20px;
+
+}
+
+.data-send-container .btn-container .btn {
+    width: 80%;
+    display: block;
+    margin: 30px auto;
+    background-color: #F64283;
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+
+}
+
+
+.data-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.data-container .data {
+
+    background-color:#F174DC;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+}
+
+.data-container .data p {
+    text-align: center;
+}

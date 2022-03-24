@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Container, Row, Col, Image} from 'react-bootstrap';
 import { useForm } from '../../hooks/useForm';
-import { types } from '../../types/types';
 import { useDispatch } from 'react-redux';
+import { types } from '../../types/types';
 
 
 //Image
@@ -11,7 +11,8 @@ import User from '../../images/user.jpg';
 
 
 
-const Birth = ({checkBirth, enableDispatch}) => {
+
+const Contact = ({checkContact, enableDispatch}) => {
 
 
     const dispatch = useDispatch();
@@ -20,38 +21,33 @@ const Birth = ({checkBirth, enableDispatch}) => {
     const [formErrorMsg, setFormErrorMsg] = useState('');
 
     const [ formValues, handleInputChange] = useForm({
-        day: '',
-        month:'',
-        year: ''
+        email: '',
+        phone:'',
         
     })
-    const { day, month, year } = formValues;
+    
+    const { email, phone } = formValues;
 
 
     //Validate form
     const isValidate = () => {
 
-        if( day.trim().length === 0){
+        if( email.trim().length === 0){
             setFormError(true);
-            setFormErrorMsg(' El día es requerido ');
-        } else if(month.trim().length === 0 ){
+            setFormErrorMsg(' El email es requerido ');
+        } else if(phone.trim().length === 0 ){
             setFormError(true);
-            setFormErrorMsg(' El mes es requerido  ');
-        } else if(year.trim().length === 0 ){
-            setFormError(true);
-            setFormErrorMsg(' El año es requerido ');
-        } else {
+            setFormErrorMsg(' el télefono es requerido ');
+        }  else {
             setFormError(false);
         }
 
     }
 
-
     // Object to send in the action
     const dataUser = {
-        day: day,
-        month: month,
-        year: year
+        email: email,
+        phone: phone,
     }
     
     //Redux Action
@@ -67,15 +63,15 @@ const Birth = ({checkBirth, enableDispatch}) => {
         dispatch(setDataUser(dataUser));
 
     },[enableDispatch]);
-
     
+
 
     useEffect(() => {
 
         isValidate();
-        checkBirth(formError);
+        checkContact(formError);
 
-    },[day,month,year])
+    },[email,phone])
    
 
 
@@ -95,21 +91,15 @@ const Birth = ({checkBirth, enableDispatch}) => {
                 <form>
                     <h3> ¿Cuál es tu fecha de nacimiento? </h3>
                     <input type='text'
-                           name='day' 
-                           placeholder='Día'  
-                           value={day} 
+                           name='email' 
+                           placeholder='Correo'  
+                           value={email} 
                            onChange={handleInputChange}/>
 
                     <input type='text' 
-                           name='month' 
-                           placeholder='Mes' 
-                           value={month} 
-                           onChange={handleInputChange} />
-
-                    <input type='text' 
-                           name='year' 
-                           placeholder='Año' 
-                           value={year} 
+                           name='phone' 
+                           placeholder='Télefono' 
+                           value={phone} 
                            onChange={handleInputChange} />
 
                 </form>
@@ -125,12 +115,19 @@ const Birth = ({checkBirth, enableDispatch}) => {
                 {
                     formError
                         ? <p> {formErrorMsg} </p>
-                        : <p>{`${day} ${month} ${year} `}</p>
-                }
+                        : <>
+                            <p>{`Correo electrónico:${email}` }</p>
+                            <p>{`Télefono celular:${phone}`}</p>
+                          </>
+            }
                 
             </Col>
 
+             
+
         </Row>
+
+
 
     </Container>
 
@@ -140,4 +137,4 @@ const Birth = ({checkBirth, enableDispatch}) => {
 
 
 
-export default Birth;
+export default Contact;
